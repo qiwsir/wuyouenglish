@@ -3,20 +3,31 @@
 
 import csv
 
-def read_data(filename, start_id):
-    csv_reader = csv.reader(open(filename))
-    new_data = {}
-    for row in csv_reader:
-        if row[3]:        
-            value_row = [cell for cell in row[1:]]
-            if start_id != row[0]:
-                start_id = row[0]
+class NewDataStructure(object):
+    def __init__(self, filename):
+        self.reader = csv.reader(open(filename))
 
-            new_data[start_id] = []
-            new_data[start_id].append(value_row)
-    return new_data
+    def data_key(self, p_id):
+        key = {}         
+        for row in self.reader:
+            if p_id != row[0]:
+                p_id = row[0]
+            key[p_id] = []
+        return key
+
+#def read_data(filename, key):
+#    csv_reader = csv.reader(open(filename))
+#    new_data = {}
+#    for row in csv_reader:
+#        value_row = [cell for cell in row[1:]]
+#        if key != row[0]:
+#            key = row[0]
+#
+#        new_data[key] = []
+#        new_data[key].append(value_row)
+#    return new_data
 
 
 if __name__ == "__main__":
-    print read_data("w.csv", "00001")
-
+    new = NewDataStructure("w.csv")
+    print new.data_key("00001")
