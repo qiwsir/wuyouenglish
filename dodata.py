@@ -5,29 +5,34 @@ import csv
 
 class NewDataStructure(object):
     def __init__(self, filename):
-        self.reader = csv.reader(open(filename))
-
-    def data_key(self, p_id):
-        key = {}         
-        for row in self.reader:
-            if p_id != row[0]:
-                p_id = row[0]
-            key[p_id] = []
+        self.filename = filename
+        
+    def get_distinctid(self):
+        key = []
+        f = open(self.filename)
+        for row in csv.reader(f):
+            if row[0] not in key:
+                key.append(row[0])
+        f.close()
         return key
 
-#def read_data(filename, key):
-#    csv_reader = csv.reader(open(filename))
-#    new_data = {}
-#    for row in csv_reader:
-#        value_row = [cell for cell in row[1:]]
-#        if key != row[0]:
-#            key = row[0]
-#
-#        new_data[key] = []
-#        new_data[key].append(value_row)
-#    return new_data
+    def make_new_structure(self):
+        pure_id = self.get_distinctid()
+        data_empty_value = {}
+        for key in pure_id:
+            data_empty_value[key] = []
+        return data_empty_value
+
+    def make_new_data(self):
+        new_data = self.make_new_structure()
+        f = open(self.filename)
+        for row in csv.reader(f):
+            value_row = [cell for cell in row[1:]]
+            new_data[row[0]].append(value_row)
+        f.close()
+        return new_data
 
 
 if __name__ == "__main__":
     new = NewDataStructure("w.csv")
-    print new.data_key("00001")
+    print new.make_new_data()
