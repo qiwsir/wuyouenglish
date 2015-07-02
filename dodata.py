@@ -32,6 +32,15 @@ class NewDataStructure(object):
         f.close()
         return new_data
 
+    def find_way(self,processid):
+        object_data = self.make_new_data()
+        values = object_data[processid]
+        for v in values:
+            if v[2]==5:
+                self.find_way(v[0])
+            else:
+                return v[1]
+
 
 if __name__ == "__main__":
     new = NewDataStructure("w.csv")
