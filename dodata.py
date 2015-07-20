@@ -37,13 +37,23 @@ class NewDataStructure(object):
         values = object_data[processid]
         for v in values:
             if v[2]=='5':
-                print v[0]
-                self.find_way("00"+v[0])
+                print processid,v[0]
+                new_proid = self.new_processid(v[0])
+                self.find_way(new_proid)
             else:
                 #return v[1]
                 print v[1]
-
+                print "--------"
+    
+    def new_processid(self, processid):
+        length_id = len(processid)
+        if length_id == 3:
+            return "00"+processid
+        if length_id == 4:
+            return "0"+processid
+        if length_id == 5:
+            return processid
 
 if __name__ == "__main__":
-    new = NewDataStructure("ws.csv")
+    new = NewDataStructure("w.csv")
     new.find_way("00001")
